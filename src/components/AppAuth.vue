@@ -212,9 +212,9 @@ const schema = ref({
   email: "required|min:3|max:100|email",
   age: "required|max_value:100|min_value:18",
   password: "required|min:9|max:100|excluded:password",
-  confirm_password: "confirmed:@password",
-  country: "required|excluded:Antarctica,Mantarctica",
-  tos: "required",
+  confirm_password: "passwords_mismatch:@password",
+  country: "required|country_excluded:Antarctica,Mantarctica",
+  tos: "tos",
 });
 const userData = ref({
   country: "USA",
