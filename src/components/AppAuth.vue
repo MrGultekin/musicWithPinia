@@ -90,6 +90,7 @@
             </button>
           </form>
 
+
           <!-- Registration Form -->
           <vee-form
             v-show="tab === 'register'"
