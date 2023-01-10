@@ -95,6 +95,7 @@
             v-show="tab === 'register'"
             :validation-schema="schema"
             @submit="register"
+            :initial-values="userData"
           >
             <!--            @submit="register" doesnt need prevent modifier bcoz veeValidate has its own-->
             <!-- Name -->
@@ -214,6 +215,9 @@ const schema = ref({
   confirm_password: "confirmed:@password",
   country: "required|excluded:Antarctica,Mantarctica",
   tos: "required",
+});
+const userData = ref({
+  country: "USA",
 });
 
 function register(values) {
