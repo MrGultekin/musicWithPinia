@@ -63,24 +63,32 @@
           </ul>
 
           <!-- Login Form -->
-          <form v-show="tab === 'login'">
+          <vee-form
+            v-show="tab === 'login'"
+            :validation-schema="loginSchema"
+            @submit="login"
+          >
             <!-- Email -->
             <div class="mb-3">
               <label class="inline-block mb-2">Email</label>
-              <input
+              <vee-field
+                name="email"
                 type="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Email"
               />
+              <ErrorMessage class="text-red-600" name="email" />
             </div>
             <!-- Password -->
             <div class="mb-3">
               <label class="inline-block mb-2">Password</label>
-              <input
+              <vee-field
+                name="password"
                 type="password"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Password"
               />
+              <ErrorMessage class="text-red-600" name="password" />
             </div>
             <button
               type="submit"
@@ -88,9 +96,16 @@
             >
               Submit
             </button>
-          </form>
+          </vee-form>
 
           <!-- Registration Form -->
+          <div
+            class="text-white text-center font-bold p-4 mb-4"
+            v-if="reg_show_alert"
+            :class="reg_alert_variant"
+          >
+            {{ reg_alert_msg }}
+          </div>
           <vee-form
             v-show="tab === 'register'"
             :validation-schema="schema"
@@ -191,6 +206,7 @@
             <button
               type="submit"
               class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+              :disabled="reg_in_submission"
             >
               Submit
             </button>
@@ -219,8 +235,27 @@ const schema = ref({
 const userData = ref({
   country: "USA",
 });
+const reg_in_submission = ref(false);
+const reg_show_alert = ref(false);
+const reg_alert_variant = ref("bg-blue-500");
+const reg_alert_msg = ref("Please wait! Your registration is in progress.");
 
 function register(values) {
+  reg_show_alert.value = true;
+  reg_in_submission.value = true;
+  reg_alert_variant.value = "bg-blue-500";
+  reg_alert_msg.value = "Please wait! Your registration is in progress.";
+
+  reg_alert_variant.value = "bg-green-500";
+  reg_alert_msg.value = "Registration successful!";
+  console.log(values);
+}
+// 4 Login
+const loginSchema = ref({
+  email: "required|min:3|max:100|email",
+  password: "required|min:9|max:100|excluded:password",
+});
+function login(values) {
   console.log(values);
 }
 </script>
